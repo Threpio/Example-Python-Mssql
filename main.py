@@ -9,7 +9,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@app.route("/create", methods=["POST"])
+@app.route("/user", methods=["POST"])
 def create_user():
     # Check for data needed to create the user
     username = request.args.get('username', '')
@@ -26,7 +26,7 @@ def create_user():
     return f"User: {userid}, Created", 201
 
 
-@app.route("/get")
+@app.route("/user", methods=["GET"])
 def get_user():
 
     # Check for userID in method
@@ -35,13 +35,19 @@ def get_user():
         return "No userid specified", 400
 
     # Check database
+    user = get_user_from_db()
+    if user == '':
+        return f"User not found with ID: {userid}", 404
 
     return "User, Found", 200
 
 
-@app.route("/list")
+@app.route("/users")
 def list_users():
-    return "User List", 200
+
+    # List all users from the database :)
+    users = get_all_users_from_db()
+    return [user.to_json() for user in users], 200
 
 
 if __name__ == "__main__":
