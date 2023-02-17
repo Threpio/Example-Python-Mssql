@@ -1,0 +1,7 @@
+CREATE DATABASE test;
+
+CREATE TABLE test.users (
+    user_id int SERIAL DEFAULT VALUE PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    data VARCHAR(255) NOT NULL
+)
